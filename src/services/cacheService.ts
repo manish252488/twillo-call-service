@@ -17,7 +17,17 @@ class CacheService {
     }
 
     public set(key: string, value: any, expiresIn: number): void {
+        // remove the expired items
+        this.removeExpiredItems();
         this.cache.set(key, { data: value, expiresAt: Date.now() + expiresIn });
+    }
+
+    public removeExpiredItems(): void {
+        this.cache.forEach((item, key) => {
+            if (item.expiresAt && item.expiresAt < Date.now()) {
+                this.cache.delete(key);
+            }
+        });
     }
 }
 // using singleton
