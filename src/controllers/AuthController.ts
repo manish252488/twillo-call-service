@@ -7,24 +7,19 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
-    }
-
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(401).json({ success: false, error: 'Invalid email or password' });
     }
 
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(401).json({ success: false, error: 'Invalid email or password' });
     }
 
     const token = generateToken(user.id, user.email);
 
     res.json({
-      success: true,
       token,
       user: {
         id: user.id,
@@ -33,7 +28,7 @@ export const login = async (req: Request, res: Response) => {
       },
     });
   } catch (error: any) {
-    res.status(500).json({ error: 'Failed to login', message: error.message });
+    res.status(500).json({ success: false, error: 'Failed to login', message: error.message });
   }
 };
 

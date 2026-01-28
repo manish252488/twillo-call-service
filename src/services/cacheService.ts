@@ -29,6 +29,12 @@ class CacheService {
             }
         });
     }
+
+    public remove(key: string): void {
+        if (this.cache.has(key)) {
+            this.cache.delete(key);
+        }
+    }
 }
 // using singleton
 export const cacheService = new CacheService();
