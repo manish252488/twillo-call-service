@@ -16,12 +16,12 @@ module.exports = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dialect: 'postgres',
-    dialectOptions: process.env.NODE_ENV === 'production' ? {
+    dialectOptions: {
       ssl: {
         require: true,
         rejectUnauthorized: false,
       },
-    } : {},
+    }
   },
 };
 
