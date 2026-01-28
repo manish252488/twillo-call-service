@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import sequelize from './lib/database';
 import { corsMiddleware } from './middlewares/cors.middleware';
+import { responseMiddleware } from './middlewares/response.middleware';
 import routes from './routes';
 
 dotenv.config();
@@ -14,13 +15,10 @@ if (!PORT) {
   throw new Error('PORT is not set');
 }
 app.use(corsMiddleware);
-
-// Cookie parser middleware (must be before routes)
 app.use(cookieParser());
-
-// Middleware to parse JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(responseMiddleware);
 
 // Initialize database connection
 async function initializeDatabase() {
