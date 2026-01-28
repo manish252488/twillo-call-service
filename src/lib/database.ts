@@ -17,6 +17,12 @@ const sequelize = new Sequelize({
     User,
   ],
   logging: process.env.NODE_ENV === 'development' ? console.log : false,
+  dialectOptions: process.env.NODE_ENV === 'production' ? {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  } : {},
 });
 
 export default sequelize;
