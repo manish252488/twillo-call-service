@@ -54,7 +54,7 @@ initializzed the db and starts the server
 ```
 npx sequelize-cli migration:generate --name your-migration-name
 npx sequelize-cli seed:generate --name your-seeder-name
-
+```
 ### Error Handling
 Centralized error handling through middleware:
 - Consistent error response format
